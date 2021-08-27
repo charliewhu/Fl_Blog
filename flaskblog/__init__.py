@@ -31,4 +31,9 @@ app.config['MAIL_USE_TLS'] = os.environ['MAIL_USE_TLS']
 app.config['MAIL_USERNAME'] = os.environ['MAIL_USERNAME']
 
 
-from flaskblog import routes
+from flaskblog.main.routes import main
+from flaskblog.accounts.routes import accounts
+from flaskblog.posts.routes import posts
+app.register_blueprint(main)
+app.register_blueprint(accounts)
+app.register_blueprint(posts)
