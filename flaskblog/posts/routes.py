@@ -5,6 +5,7 @@ from flaskblog import db
 from flaskblog.models import Post
 from flaskblog.posts.forms import PostForm
 
+
 posts = Blueprint('posts', __name__)
 
 

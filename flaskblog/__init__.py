@@ -8,7 +8,7 @@ from flaskblog.config import Config
 db = SQLAlchemy()
 bcrypt = Bcrypt()
 login_manager = LoginManager()
-login_manager.login_view = 'login'
+login_manager.login_view = 'accounts.login'
 login_manager.login_message_category = 'info'
 mail = Mail()
 
@@ -25,8 +25,10 @@ def create_app(config_class=Config):
     from flaskblog.main.routes import main
     from flaskblog.accounts.routes import accounts
     from flaskblog.posts.routes import posts
+    from flaskblog.errors.handlers import errors
     app.register_blueprint(main)
     app.register_blueprint(accounts)
     app.register_blueprint(posts)
+    app.register_blueprint(errors)
 
     return app

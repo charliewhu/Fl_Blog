@@ -6,6 +6,7 @@ from flaskblog.accounts.forms import (RegistrationForm, LoginForm, UpdateAccount
                                    RequestResetForm, ResetPasswordForm)
 from flaskblog.accounts.utils import save_picture, send_reset_email
 
+
 accounts = Blueprint('accounts', __name__)
 
 
@@ -48,6 +49,7 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for('main.home'))
+
 
 
 @accounts.route("/account", methods=['GET', 'POST'])
