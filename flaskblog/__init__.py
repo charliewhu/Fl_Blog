@@ -1,39 +1,32 @@
-import os
-import dotenv
-
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 from flask_mail import Mail
+from flaskblog.config import Config
 
-app = Flask(__name__)
-
-db = SQLAlchemy(app)
-bcrypt = Bcrypt(app)
-login_manager = LoginManager(app)
+db = SQLAlchemy()
+bcrypt = Bcrypt()
+login_manager = LoginManager()
 login_manager.login_view = 'login'
 login_manager.login_message_category = 'info'
-mail = Mail(app)
-
-BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+mail = Mail()
 
 
-dotenv_file = os.path.join(BASE_DIR, ".env")
-if os.path.isfile(dotenv_file):
-    dotenv.load_dotenv(dotenv_file)
+def create_app(config_class=Config):
+    app = Flask(__name__)
+    app.config.from_object(Config)
 
-app.config['SECRET_KEY'] = os.environ['SECRET_KEY']
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['SQLALCHEMY_DATABASE_URI']
-app.config['MAIL_SERVER'] = os.environ['MAIL_SERVER']
-app.config['MAIL_PORT'] = os.environ['MAIL_PORT']
-app.config['MAIL_USE_TLS'] = os.environ['MAIL_USE_TLS']
-app.config['MAIL_USERNAME'] = os.environ['MAIL_USERNAME']
+    db.init_app(app)
+    bcrypt.init_app(app)
+    login_manager.init_app(app)
+    mail.init_app(app)
 
+    from flaskblog.main.routes import main
+    from flaskblog.accounts.routes import accounts
+    from flaskblog.posts.routes import posts
+    app.register_blueprint(main)
+    app.register_blueprint(accounts)
+    app.register_blueprint(posts)
 
-from flaskblog.main.routes import main
-from flaskblog.accounts.routes import accounts
-from flaskblog.posts.routes import posts
-app.register_blueprint(main)
-app.register_blueprint(accounts)
-app.register_blueprint(posts)
+    return app
