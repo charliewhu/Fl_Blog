@@ -1,5 +1,6 @@
 from datetime import datetime
 from flask import current_app
+from flask_migrate import Migrate
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from flaskblog import db, login_manager
 from flask_login import UserMixin
@@ -16,6 +17,7 @@ class User(db.Model, UserMixin):
     email       = db.Column(db.String(120), unique=True, nullable=False)
     image_file  = db.Column(db.String(20), nullable=False, default='default.jpg')
     password    = db.Column(db.String(60), nullable=False)
+    updated_on  = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     posts       = db.relationship('Post', backref='author', lazy=True)
 
     def get_reset_token(self, expires_sec=1800):
@@ -39,6 +41,7 @@ class Post(db.Model):
     id          = db.Column(db.Integer, primary_key=True)
     title       = db.Column(db.String(100), nullable=False)
     date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    date_updated= db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     content     = db.Column(db.Text, nullable=False)
     user_id     = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
