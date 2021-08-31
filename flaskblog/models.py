@@ -19,6 +19,7 @@ class User(db.Model, UserMixin):
     updated_on  = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     posts       = db.relationship('Post', backref='author', lazy=True, cascade='all, delete, delete-orphan')
     comments    = db.relationship('Comment', backref='user', cascade='all, delete, delete-orphan')
+    likes       = db.relationship('Like', backref='user', cascade='all, delete, delete-orphan')
 
     def get_reset_token(self, expires_sec=1800):
         s = Serializer(current_app.config['SECRET_KEY'], expires_sec)
@@ -45,6 +46,7 @@ class Post(db.Model):
     content     = db.Column(db.Text, nullable=False)
     user_id     = db.Column(db.Integer, db.ForeignKey('user.id', ondelete="CASCADE"), nullable=False)
     comments    = db.relationship('Comment', backref='post', cascade='all, delete, delete-orphan')
+    likes       = db.relationship('Like', backref='post', cascade='all, delete, delete-orphan')
 
     def __repr__(self):
         return f"Post('{self.title}', '{self.date_posted}')"
@@ -57,5 +59,11 @@ class Comment(db.Model):
     user_id     = db.Column(db.Integer, db.ForeignKey('user.id', ondelete="CASCADE"), nullable=False)
     post_id     = db.Column(db.Integer, db.ForeignKey('post.id', ondelete="CASCADE"), nullable=False)
 
+
+class Like(db.Model):
+    id          = db.Column(db.Integer, primary_key=True)
+    date_created= db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    user_id     = db.Column(db.Integer, db.ForeignKey('user.id', ondelete="CASCADE"), nullable=False)
+    post_id     = db.Column(db.Integer, db.ForeignKey('post.id', ondelete="CASCADE"), nullable=False)
 
 

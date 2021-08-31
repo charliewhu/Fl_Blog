@@ -2,7 +2,7 @@ from flask import (render_template, url_for, flash,
                    redirect, request, abort, Blueprint)
 from flask_login import current_user, login_required
 from flaskblog import db
-from flaskblog.models import Post, Comment
+from flaskblog.models import Post, Comment, Like
 from flaskblog.posts.forms import PostForm
 
 
@@ -69,3 +69,19 @@ def delete_comment(comment_id):
     flash('Your comment has been deleted!', 'success')
     return redirect(url_for('main.home'))
 
+
+@posts.route("/post/<int:post_id>/like", methods=['GET'])
+@login_required
+def like_post(post_id):
+    post = Post.query.get_or_404(post_id)
+    like = Like.query.filter_by(user=current_user, post_id=post_id).first()
+
+    if like:
+        db.session.delete(like)
+        db.session.commit()
+    else:
+        like = Like(user=current_user, post_id=post_id)
+        db.session.add(like)
+        db.session.commit()
+
+    return redirect(url_for('main.home'))

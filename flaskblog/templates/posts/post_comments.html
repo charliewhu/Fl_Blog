@@ -18,7 +18,7 @@
               <a href="{{ url_for('accounts.user_posts', username=comment.user.username) }}">
                 {{ comment.user.username|title }}
               </a>
-              : {{ comment.text }} id={{comment.id}}
+              : {{ comment.text }}
             </div>
             <div>
               <small> {{ comment.date_posted.strftime('%Y-%m-%d') }} </small>

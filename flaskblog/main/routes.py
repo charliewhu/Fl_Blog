@@ -1,7 +1,7 @@
 from flask import render_template, request, Blueprint, flash, redirect, url_for
 from flask_login import current_user, login_required
 from flaskblog import db
-from flaskblog.models import Post, Comment, User
+from flaskblog.models import Post
 from flaskblog.posts.forms import CommentForm
 from flaskblog.posts.utils import create_comment
 
@@ -20,7 +20,7 @@ def home():
     
     form = CommentForm()
     create_comment(form)
-
+    
     return render_template('base/index.html', posts=posts, form=form)
 
 
