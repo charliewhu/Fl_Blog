@@ -1,0 +1,45 @@
+
+
+<div class="mb-3">
+
+  {% if post.comments|length > 0 %}
+
+    <div  class="mb-3">
+      <a data-toggle="collapse" href="#collapse{{post.id}}" role="button">
+        Show Comments
+      </a>
+    </div>
+
+    <div class="collapse" id="collapse{{post.id}}">
+      {% for comment in post.comments %}
+        <div class="card card-body">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <a href="{{ url_for('accounts.user_posts', username=comment.user.username) }}">
+                {{ comment.user.username|title }}
+              </a>
+              : {{ comment.text }} id={{comment.id}}
+            </div>
+            <div>
+              <small> {{ comment.date_posted.strftime('%Y-%m-%d') }} </small>
+              {% if post.author == current_user %}
+                <button type="button" class="btn btn-danger btn-sm m-1" data-toggle="modal" data-target="#deleteCommentModal{{comment.id}}"> 
+                  Delete
+                </button>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+
+        <!--Modal-->
+        {% include 'posts/comment_delete_modal.html'%}
+
+      {% endfor %}
+    </div>
+
+  {% else %}
+    <small>No Comments</small>
+  {% endif %}
+
+</div>
+

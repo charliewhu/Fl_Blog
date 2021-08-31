@@ -23,12 +23,6 @@ def create_post():
     return render_template('posts/create_post.html', title='Create Post', form=form)
 
 
-@posts.route("/post/<int:post_id>")
-def post(post_id):
-    post = Post.query.get_or_404(post_id)
-    return render_template('posts/post_detail.html', title=post.title, post=post)
-
-
 @posts.route("/post/<int:post_id>/update", methods=['GET', 'POST'])
 @login_required
 def update_post(post_id):
@@ -42,7 +36,7 @@ def update_post(post_id):
         post.content = form.content.data
         db.session.commit()
         flash('Post updated!', 'success')
-        return redirect(url_for('posts.post', post_id=post.id))
+        return redirect(url_for('main.home'))
     elif request.method == 'GET':
         form.title.data     = post.title
         form.content.data   = post.content
@@ -63,4 +57,15 @@ def delete_post(post_id):
     return redirect(url_for('main.home'))
 
 
+@posts.route("/comment/<int:comment_id>/delete", methods=['POST'])
+@login_required
+def delete_comment(comment_id):
+    comment = Comment.query.get_or_404(comment_id)
+    if comment.user != current_user:
+        abort(403)
+
+    db.session.delete(comment)
+    db.session.commit()
+    flash('Your comment has been deleted!', 'success')
+    return redirect(url_for('main.home'))
 

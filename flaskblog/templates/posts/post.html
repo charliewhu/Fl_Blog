@@ -22,61 +22,40 @@
         <a href="{{ url_for('posts.update_post', post_id=post.id) }}" class="btn btn-secondary btn-sm m-1">
           Update
         </a>
-        <button type="button" class="btn btn-danger btn-sm m-1" data-toggle="modal" data-target="#deleteModal"> 
+        <button type="button" class="btn btn-danger btn-sm m-1" data-toggle="modal" data-target="#deletePostModal{{post.id}}"> 
           Delete
         </button>
       {% endif %}
     </div>
 
     <h2 class="article-title">
-      <a class="article-title" href="{{ url_for('posts.post', post_id=post.id) }}">
         {{ post.title }}
-      </a>
     </h2>
-    <p class="article-content">
+    <h5 class="article-content mb-3">
       <strong>{{ post.content }}</strong>
-    </p>
+    </h5>
     
-    {% for comment in post.comments %}
-    <p>
-      {{ comment.text }}
-    </p>
-    {% endfor %}
+    
+    {% include 'posts/post_comments.html' %}
+    
 
-    <form class="input-group" method="POST" action="">
-  
-      {{ form.csrf_token() }}
-  
-          {% if form.text.errors %}
-            {{ form.text(class="form-control is-invalid") }}
-            <div class="invalid-feedback">
-              {% for error in form.text.errors %}
-                <span>{{ error }}</span>
-              {% endfor %}
-            </div>
-          {% else %}
-            {{ form.text(class="form-control") }}
-          {% endif %}
-
-          {{ form.postid(
-            value=post.id,
-            class="form-control"
-            ) 
-          }}
-
-        {{ form.submit(class="btn btn-outline-info") }}
-  
-    </form>
+    {% include 'posts/post_comment_form.html' %}
 
   </div>
 </article>
 
+
 <!-- Modal -->
-<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog">
+<div class="modal fade" id="deletePostModal{{post.id}}" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="deleteModalLabel">Delete Post?</h5>
+        <h5 class="modal-title" id="deleteModalLabel">
+          Delete Post? 
+          <i>
+            {{ post.title }}
+          </i>
+        </h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>

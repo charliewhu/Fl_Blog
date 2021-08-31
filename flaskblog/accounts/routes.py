@@ -1,3 +1,4 @@
+from flaskblog.posts.forms import CommentForm
 from flask import render_template, url_for, flash, redirect, request, Blueprint
 from flask_login import login_user, current_user, logout_user, login_required
 from flaskblog import db, bcrypt
@@ -5,6 +6,7 @@ from flaskblog.models import User, Post
 from flaskblog.accounts.forms import (RegistrationForm, LoginForm, UpdateAccountForm,
                                    RequestResetForm, ResetPasswordForm)
 from flaskblog.accounts.utils import save_picture, send_reset_email
+from flaskblog.posts.utils import create_comment
 
 
 accounts = Blueprint('accounts', __name__)
@@ -109,7 +111,7 @@ def reset_token(token):
     return render_template('accounts/reset_token.html', title='Reset Password', form=form)
 
 
-@accounts.route("/user/<string:username>")
+@accounts.route("/user/<string:username>", methods=['GET', 'POST'])
 def user_posts(username):
     page = request.args.get('page', 1, type=int)
     user = User.query.filter_by(username=username).first_or_404()
@@ -117,4 +119,8 @@ def user_posts(username):
         .filter_by(author=user)\
         .order_by(Post.date_posted.desc())\
         .paginate(page=page, per_page=5)
-    return render_template('accounts/user_posts.html', posts=posts, user=user)
+
+    form = CommentForm()
+    create_comment(form)
+
+    return render_template('accounts/user_posts.html', posts=posts, user=user, form=form)

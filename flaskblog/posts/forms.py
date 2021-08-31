@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, TextAreaField
+from wtforms import StringField, SubmitField, TextAreaField, HiddenField
 from wtforms.validators import DataRequired
 
 
@@ -8,6 +8,8 @@ class PostForm(FlaskForm):
     content = TextAreaField('Content', validators=[DataRequired()])
     submit  = SubmitField('Post')
 
-# class CommentForm(FlaskForm):
-#     content = StringField('Content', validators=[DataRequired()], render_kw={"placeholder": "Comment"})
-#     submit  = SubmitField('Post')
+
+class CommentForm(FlaskForm):
+    text    = StringField('text', validators=[DataRequired()], render_kw={"placeholder": "Add Comment Here.."})
+    postid  = HiddenField('postid', validators=[DataRequired()])
+    submit  = SubmitField('Post')
