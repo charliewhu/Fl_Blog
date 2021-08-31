@@ -1,5 +1,5 @@
 from flask import (render_template, url_for, flash,
-                   redirect, request, abort, Blueprint)
+                   redirect, request, abort, Blueprint, jsonify)
 from flask_login import current_user, login_required
 from flaskblog import db
 from flaskblog.models import Post, Comment, Like
@@ -70,13 +70,18 @@ def delete_comment(comment_id):
     return redirect(url_for('main.home'))
 
 
-@posts.route("/post/<int:post_id>/like", methods=['GET'])
+@posts.route("/post/<int:post_id>/like", methods=['POST'])
 @login_required
 def like_post(post_id):
-    post = Post.query.get_or_404(post_id)
-    like = Like.query.filter_by(user=current_user, post_id=post_id).first()
+    post = Post.query.filter_by(id=post_id).first()
+    like = Like.query.filter_by(
+        user=current_user, 
+        post_id=post_id)\
+        .first()
 
-    if like:
+    if not post:
+        return jsonify({'error': 'Post does not exist.'}, 400)
+    elif like:
         db.session.delete(like)
         db.session.commit()
     else:
@@ -84,4 +89,7 @@ def like_post(post_id):
         db.session.add(like)
         db.session.commit()
 
-    return redirect(url_for('main.home'))
+    return jsonify({
+        "likes": len(post.likes), 
+        "liked": current_user in map(lambda x: x.user, post.likes)
+    })
