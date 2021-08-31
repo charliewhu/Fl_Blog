@@ -1,7 +1,6 @@
 from datetime import datetime
-from flask import current_app
-from flask_migrate import Migrate
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
+from flask import current_app
 from flaskblog import db, login_manager
 from flask_login import UserMixin
 
@@ -18,7 +17,8 @@ class User(db.Model, UserMixin):
     image_file  = db.Column(db.String(20), nullable=False, default='default.jpg')
     password    = db.Column(db.String(60), nullable=False)
     updated_on  = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
-    posts       = db.relationship('Post', backref='author', lazy=True)
+    posts       = db.relationship('Post', backref='author', lazy=True, passive_deletes=True)
+    comments    = db.relationship('Comment', backref='user', passive_deletes=True)
 
     def get_reset_token(self, expires_sec=1800):
         s = Serializer(current_app.config['SECRET_KEY'], expires_sec)
@@ -43,7 +43,19 @@ class Post(db.Model):
     date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     date_updated= db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     content     = db.Column(db.Text, nullable=False)
-    user_id     = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    user_id     = db.Column(db.Integer, db.ForeignKey('user.id', ondelete="CASCADE"), nullable=False)
+    comments    = db.relationship('Comment', backref='post', passive_deletes=True)
 
     def __repr__(self):
         return f"Post('{self.title}', '{self.date_posted}')"
+
+
+class Comment(db.Model):
+    id          = db.Column(db.Integer, primary_key=True)
+    text        = db.Column(db.String(200), nullable=False)
+    date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    user_id     = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    post_id     = db.Column(db.Integer, db.ForeignKey('post.id'), nullable=False)
+
+
+

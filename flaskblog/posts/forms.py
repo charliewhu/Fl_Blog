@@ -7,3 +7,7 @@ class PostForm(FlaskForm):
     title   = StringField('Title', validators=[DataRequired()])
     content = TextAreaField('Content', validators=[DataRequired()])
     submit  = SubmitField('Post')
+
+# class CommentForm(FlaskForm):
+#     content = StringField('Content', validators=[DataRequired()], render_kw={"placeholder": "Comment"})
+#     submit  = SubmitField('Post')

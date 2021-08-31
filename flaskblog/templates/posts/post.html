@@ -34,8 +34,39 @@
       </a>
     </h2>
     <p class="article-content">
-      {{ post.content }}
+      <strong>{{ post.content }}</strong>
     </p>
+    
+    {% for comment in post.comments %}
+    <p>
+      {{ comment.text }}
+    </p>
+    {% endfor %}
+
+    <form class="input-group" method="POST" action="">
+  
+      {{ form.csrf_token() }}
+  
+          {% if form.text.errors %}
+            {{ form.text(class="form-control is-invalid") }}
+            <div class="invalid-feedback">
+              {% for error in form.text.errors %}
+                <span>{{ error }}</span>
+              {% endfor %}
+            </div>
+          {% else %}
+            {{ form.text(class="form-control") }}
+          {% endif %}
+
+          {{ form.postid(
+            value=post.id,
+            class="form-control"
+            ) 
+          }}
+
+        {{ form.submit(class="btn btn-outline-info") }}
+  
+    </form>
 
   </div>
 </article>
