@@ -1,15 +1,14 @@
 from flaskblog.posts.forms import CommentForm
-from flask import render_template, url_for, flash, redirect, request, Blueprint
+from flask import render_template, url_for, flash, redirect, request
 from flask_login import login_user, current_user, logout_user, login_required
 from flaskblog import db, bcrypt
+from flaskblog.accounts import accounts
 from flaskblog.models import User, Post
 from flaskblog.accounts.forms import (RegistrationForm, LoginForm, UpdateAccountForm,
                                    RequestResetForm, ResetPasswordForm)
 from flaskblog.accounts.utils import save_picture, send_reset_email
 from flaskblog.posts.utils import create_comment
 
-
-accounts = Blueprint('accounts', __name__)
 
 
 @accounts.route("/register", methods=['GET', 'POST'])

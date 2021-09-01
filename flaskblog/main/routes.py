@@ -1,13 +1,11 @@
-from flask import render_template, request, Blueprint, flash, redirect, url_for
+from flask import render_template, request, flash, redirect, url_for
 from flask_login import current_user, login_required
 from flaskblog import db
+from flaskblog.main import main
 from flaskblog.models import Post
 from flaskblog.posts.forms import CommentForm
 from flaskblog.posts.utils import create_comment
 
-
-
-main = Blueprint('main', __name__)
 
 
 @main.route("/", methods=['GET', 'POST'])

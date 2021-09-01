@@ -1,12 +1,11 @@
 from flask import (render_template, url_for, flash,
-                   redirect, request, abort, Blueprint, jsonify)
+                   redirect, request, abort, jsonify)
 from flask_login import current_user, login_required
 from flaskblog import db
+from flaskblog.posts import posts
 from flaskblog.models import Post, Comment, Like
 from flaskblog.posts.forms import PostForm
 
-
-posts = Blueprint('posts', __name__)
 
 
 @posts.route("/post/create", methods=['GET', 'POST'])

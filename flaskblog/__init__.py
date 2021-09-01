@@ -26,13 +26,20 @@ def create_app(config_class=Config):
     login_manager.init_app(app)
     mail.init_app(app)
 
-    from flaskblog.main.routes import main
-    from flaskblog.accounts.routes import accounts
-    from flaskblog.posts.routes import posts
-    from flaskblog.errors.handlers import errors
-    app.register_blueprint(main)
+    from flaskblog.accounts import accounts
     app.register_blueprint(accounts)
-    app.register_blueprint(posts)
+
+    from flaskblog.errors import errors
     app.register_blueprint(errors)
 
+    from flaskblog.main import main
+    app.register_blueprint(main)
+
+    from flaskblog.posts import posts
+    app.register_blueprint(posts)
+            
+
     return app
+
+
+from flaskblog import models
