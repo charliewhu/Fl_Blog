@@ -22,11 +22,10 @@
             </div>
             <div>
               <small> {{ comment.date_posted.strftime('%Y-%m-%d') }} </small>
-              {% if post.author == current_user %}
-                <button type="button" class="btn btn-danger btn-sm m-1" data-toggle="modal" data-target="#deleteCommentModal{{comment.id}}"> 
-                  Delete
-                </button>
-              {% endif %}
+                {% if post.author == current_user %}
+                  <button type="button" class="btn btn-danger" aria-label="Close" data-toggle="modal" data-target="#deleteCommentModal{{comment.id}}"></button>
+                {% endif %}
+              
             </div>
           </div>
         </div>

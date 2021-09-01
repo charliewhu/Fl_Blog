@@ -60,7 +60,7 @@ def delete_post(post_id):
 @login_required
 def delete_comment(comment_id):
     comment = Comment.query.get_or_404(comment_id)
-    if comment.user != current_user:
+    if comment.user != current_user and current_user != comment.post.author:
         abort(403)
 
     db.session.delete(comment)
