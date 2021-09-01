@@ -3,7 +3,8 @@ from flaskblog.models import User, Post
 
 app = create_app()
 
-
+if __name__ == '__main__':
+    app.run()
 
 
 
