@@ -1,1 +1,65 @@
-2021-09-01 15:54:44,025 INFO: flaskblog startup [in C:\Users\charl\Desktop\CodeProjects\Python\Fl_Blog\flaskblog\__init__.py:66]
+2021-09-01 16:37:41,022 ERROR: Exception on / [GET] [in c:\users\charl\desktop\codeprojects\python\fl_blog\env\lib\site-packages\flask\app.py:1454]
+Traceback (most recent call last):
+  File "c:\users\charl\desktop\codeprojects\python\fl_blog\env\lib\site-packages\sqlalchemy\engine\base.py", line 1771, in _execute_context
+    self.dialect.do_execute(
+  File "c:\users\charl\desktop\codeprojects\python\fl_blog\env\lib\site-packages\sqlalchemy\engine\default.py", line 717, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.OperationalError: no such table: post
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "c:\users\charl\desktop\codeprojects\python\fl_blog\env\lib\site-packages\flask\app.py", line 2070, in wsgi_app
+    response = self.full_dispatch_request()
+  File "c:\users\charl\desktop\codeprojects\python\fl_blog\env\lib\site-packages\flask\app.py", line 1515, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "c:\users\charl\desktop\codeprojects\python\fl_blog\env\lib\site-packages\flask\app.py", line 1513, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "c:\users\charl\desktop\codeprojects\python\fl_blog\env\lib\site-packages\flask\app.py", line 1499, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "C:\Users\charl\Desktop\CodeProjects\Python\Fl_Blog\flaskblog\main\routes.py", line 15, in home
+    posts = Post.query\
+  File "c:\users\charl\desktop\codeprojects\python\fl_blog\env\lib\site-packages\flask_sqlalchemy\__init__.py", line 534, in paginate
+    items = self.limit(per_page).offset((page - 1) * per_page).all()
+  File "c:\users\charl\desktop\codeprojects\python\fl_blog\env\lib\site-packages\sqlalchemy\orm\query.py", line 2711, in all
+    return self._iter().all()
+  File "c:\users\charl\desktop\codeprojects\python\fl_blog\env\lib\site-packages\sqlalchemy\orm\query.py", line 2846, in _iter
+    result = self.session.execute(
+  File "c:\users\charl\desktop\codeprojects\python\fl_blog\env\lib\site-packages\sqlalchemy\orm\session.py", line 1689, in execute
+    result = conn._execute_20(statement, params or {}, execution_options)
+  File "c:\users\charl\desktop\codeprojects\python\fl_blog\env\lib\site-packages\sqlalchemy\engine\base.py", line 1583, in _execute_20
+    return meth(self, args_10style, kwargs_10style, execution_options)
+  File "c:\users\charl\desktop\codeprojects\python\fl_blog\env\lib\site-packages\sqlalchemy\sql\elements.py", line 323, in _execute_on_connection
+    return connection._execute_clauseelement(
+  File "c:\users\charl\desktop\codeprojects\python\fl_blog\env\lib\site-packages\sqlalchemy\engine\base.py", line 1452, in _execute_clauseelement
+    ret = self._execute_context(
+  File "c:\users\charl\desktop\codeprojects\python\fl_blog\env\lib\site-packages\sqlalchemy\engine\base.py", line 1814, in _execute_context
+    self._handle_dbapi_exception(
+  File "c:\users\charl\desktop\codeprojects\python\fl_blog\env\lib\site-packages\sqlalchemy\engine\base.py", line 1995, in _handle_dbapi_exception
+    util.raise_(
+  File "c:\users\charl\desktop\codeprojects\python\fl_blog\env\lib\site-packages\sqlalchemy\util\compat.py", line 207, in raise_
+    raise exception
+  File "c:\users\charl\desktop\codeprojects\python\fl_blog\env\lib\site-packages\sqlalchemy\engine\base.py", line 1771, in _execute_context
+    self.dialect.do_execute(
+  File "c:\users\charl\desktop\codeprojects\python\fl_blog\env\lib\site-packages\sqlalchemy\engine\default.py", line 717, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such table: post
+[SQL: SELECT post.id AS post_id, post.title AS post_title, post.date_posted AS post_date_posted, post.date_updated AS post_date_updated, post.content AS post_content, post.user_id AS post_user_id 
+FROM post ORDER BY post.date_posted DESC
+ LIMIT ? OFFSET ?]
+[parameters: (5, 0)]
+(Background on this error at: https://sqlalche.me/e/14/e3q8)
+2021-09-01 16:38:22,342 INFO: flaskblog startup [in C:\Users\charl\Desktop\CodeProjects\Python\Fl_Blog\flaskblog\__init__.py:66]
+2021-09-01 16:39:07,102 INFO: flaskblog startup [in C:\Users\charl\Desktop\CodeProjects\Python\Fl_Blog\flaskblog\__init__.py:66]
+2021-09-01 16:40:00,046 INFO: flaskblog startup [in C:\Users\charl\Desktop\CodeProjects\Python\Fl_Blog\flaskblog\__init__.py:66]
+2021-09-01 16:40:16,327 INFO: flaskblog startup [in C:\Users\charl\Desktop\CodeProjects\Python\Fl_Blog\flaskblog\__init__.py:66]
+2021-09-01 16:44:34,121 INFO: flaskblog startup [in C:\Users\charl\Desktop\CodeProjects\Python\Fl_Blog\flaskblog\__init__.py:66]
+2021-09-01 16:46:31,580 INFO: flaskblog startup [in C:\Users\charl\Desktop\CodeProjects\Python\Fl_Blog\flaskblog\__init__.py:66]
+2021-09-01 16:46:42,323 INFO: flaskblog startup [in C:\Users\charl\Desktop\CodeProjects\Python\Fl_Blog\flaskblog\__init__.py:66]
+2021-09-01 16:46:53,297 INFO: flaskblog startup [in C:\Users\charl\Desktop\CodeProjects\Python\Fl_Blog\flaskblog\__init__.py:66]
+2021-09-01 16:47:30,477 INFO: flaskblog startup [in C:\Users\charl\Desktop\CodeProjects\Python\Fl_Blog\flaskblog\__init__.py:66]
+2021-09-01 16:48:47,644 INFO: flaskblog startup [in C:\Users\charl\Desktop\CodeProjects\Python\Fl_Blog\flaskblog\__init__.py:66]
+2021-09-01 17:35:38,543 INFO: flaskblog startup [in C:\Users\charl\Desktop\CodeProjects\Python\Fl_Blog\flaskblog\__init__.py:66]
+2021-09-01 17:35:46,840 INFO: flaskblog startup [in C:\Users\charl\Desktop\CodeProjects\Python\Fl_Blog\flaskblog\__init__.py:66]
+2021-09-01 17:36:25,539 INFO: flaskblog startup [in C:\Users\charl\Desktop\CodeProjects\Python\Fl_Blog\flaskblog\__init__.py:66]
+2021-09-01 17:36:45,558 INFO: flaskblog startup [in C:\Users\charl\Desktop\CodeProjects\Python\Fl_Blog\flaskblog\__init__.py:66]

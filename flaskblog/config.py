@@ -2,7 +2,7 @@ import os
 import dotenv
 
 
-BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
 class Config:
     
@@ -14,7 +14,7 @@ class Config:
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL', '')\
         .replace('postgres://', 'postgresql://')\
         or 'sqlite:///' + \
-        os.path.join(BASE_DIR, 'app.db')
+        os.path.join(BASE_DIR, 'flaskblog.db')
 
     LOG_TO_STDOUT = os.environ.get('LOG_TO_STDOUT')
 
