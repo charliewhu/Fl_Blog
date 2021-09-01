@@ -70,3 +70,4 @@ FROM post ORDER BY post.date_posted DESC
 2021-09-01 18:12:38,707 INFO: flaskblog startup [in C:\Users\charl\Desktop\CodeProjects\Python\Fl_Blog\flaskblog\__init__.py:66]
 2021-09-01 18:12:42,047 INFO: flaskblog startup [in C:\Users\charl\Desktop\CodeProjects\Python\Fl_Blog\flaskblog\__init__.py:66]
 2021-09-01 18:12:49,075 INFO: flaskblog startup [in C:\Users\charl\Desktop\CodeProjects\Python\Fl_Blog\flaskblog\__init__.py:66]
+2021-09-01 18:17:49,850 INFO: flaskblog startup [in C:\Users\charl\Desktop\CodeProjects\Python\Fl_Blog\flaskblog\__init__.py:66]
